@@ -1,0 +1,1687 @@
+{
+  "openapi": "3.0.1",
+  "info": {
+    "title": "Delilah RISTO API",
+    "description": "API de aplicación de domicilios del restaurante Delilah RISTO",
+    "termsOfService": "https://www.google.com",
+    "contact": {
+      "email": "dh19ob87@gmail.com"
+    },
+    "license": {
+      "name": "Apache 2.0",
+      "url": "https://www.apache.org/licenses/LICENSE-2.0.html"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/"
+    }
+  ],
+  "tags": [
+    {
+      "name": "ingresar",
+      "description": "End Point para ingresar al sistema. Solicita el email y la contraseña."
+    },
+    {
+      "name": "usuario",
+      "description": "End Point de CRUD para Administrador. Para el usuario retorna la información del perfil."
+    },
+    {
+      "name": "historial",
+      "description": "End Point de consulta del historial de pedidos del usuario logeado en el sistema. Y para el administrador, consultas de los pedidos de los usuarios e historiales de pedidos."
+    },
+    {
+      "name": "pedido",
+      "description": "End Point que permite al usuario crear un pedido. Y CRUD de pedidos del administrador."
+    },
+    {
+      "name": "productos",
+      "description": "End Point que permite al usuario conocer los productos disponibles. Y al administrador le permite crear un producto."
+    },
+    {
+      "name": "producto",
+      "description": "End Point CRUD para el administrador."
+    }
+  ],
+  "paths": {
+    "/ingresar": {
+      "post": {
+        "tags": [
+          "ingresar"
+        ],
+        "summary": "Da ingreso a un usuario a la plataforma si el email y password son correctos. Retorna el token.",
+        "operationId": "login",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/credencial"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "operacion Exitosa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/operacionExitosa"
+                }
+              }
+            }
+          },
+          "406": {
+            "description": "Tipos de dato incorrectos",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/notAcceptable"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/serverError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "tags": [
+          "ingresar"
+        ],
+        "summary": "Verifica el estado del token.",
+        "operationId": "verifyToken",
+        "responses": {
+          "200": {
+            "description": "operacion Exitosa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/operacionExitosa"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token vencida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/unauthorized"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/serverError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/usuario": {
+      "get": {
+        "tags": [
+          "usuario"
+        ],
+        "summary": "Retorna la información del perfil del usuario logeado.",
+        "operationId": "InfoUserProfile",
+        "responses": {
+          "200": {
+            "description": "Operación exitosa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/dataUser"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token vencida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Prohibido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forbidden"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/serverError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "usuario"
+        ],
+        "summary": "Crea un usuario en el sistema",
+        "operationId": "createUser",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/dataUser"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuario creado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/creado"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token vencida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Prohibido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forbidden"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/serverError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/usuario/all": {
+      "get": {
+        "tags": [
+          "usuario"
+        ],
+        "summary": "Retorna la información del perfil de todos los usuarios. Rol Admin",
+        "operationId": "AllUsersProfile",
+        "responses": {
+          "200": {
+            "description": "Operación exitosa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/dataUser"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token vencida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Prohibido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forbidden"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/serverError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/usuario/{id_usuario}": {
+      "get": {
+        "tags": [
+          "usuario"
+        ],
+        "summary": "Retorna la información de perfil de un usuario. Rol Admin.",
+        "operationId": "userProfileByID",
+        "parameters": [
+          {
+            "name": "id_usuario",
+            "in": "path",
+            "description": "ID del usuario",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operación exitosa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/dataUser"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token vencida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Prohibido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forbidden"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/serverError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "usuario"
+        ],
+        "summary": "Elimina un usuario. Solo administrador.",
+        "operationId": "deleteUser",
+        "parameters": [
+          {
+            "name": "id_usuario",
+            "in": "path",
+            "description": "ID del usuario",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operación exitosa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/operacionExitosa"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token vencida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Prohibido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forbidden"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/serverError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "usuario"
+        ],
+        "summary": "Actualizar los datos de un usuario. Solo admin.",
+        "operationId": "Actualizar usuario",
+        "parameters": [
+          {
+            "name": "id_usuario",
+            "in": "path",
+            "description": "ID del usuario",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/actualizarUsuario"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Operación exitosa.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/operacionExitosa"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token vencida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Prohibido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forbidden"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/serverError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/historial": {
+      "get": {
+        "tags": [
+          "historial"
+        ],
+        "summary": "Retorna el historial de compras del usuario logeado.",
+        "operationId": "userHistory",
+        "responses": {
+          "200": {
+            "description": "Operación exitosa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/historial"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token vencida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Prohibido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forbidden"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/serverError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/historial/all": {
+      "get": {
+        "tags": [
+          "historial"
+        ],
+        "summary": "Retorna el historial de todos los usuarios. Solo Administrador.",
+        "operationId": "userHistoryAll",
+        "responses": {
+          "200": {
+            "description": "Operación exitosa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/historial"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token vencida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Prohibido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forbidden"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/serverError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/historial/{id_usuario}": {
+      "get": {
+        "tags": [
+          "historial"
+        ],
+        "summary": "Retorna la información de perfil de un usuario. Rol Admin.",
+        "operationId": "HistoryByID",
+        "parameters": [
+          {
+            "name": "id_usuario",
+            "in": "path",
+            "description": "ID del usuario",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operación exitosa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/historial"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token vencida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Prohibido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forbidden"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/serverError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pedido": {
+      "post": {
+        "tags": [
+          "pedido"
+        ],
+        "summary": "Crea un pedido.",
+        "operationId": "createPedido",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/crearPedido"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Usuario creado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/pedido"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token vencida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Prohibido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forbidden"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/serverError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pedido/{id_pedido}": {
+      "get": {
+        "tags": [
+          "pedido"
+        ],
+        "summary": "Retorna la información de perfil de un usuario. Rol Admin.",
+        "operationId": "QueryOrder",
+        "parameters": [
+          {
+            "name": "id_pedido",
+            "in": "path",
+            "description": "ID del usuario",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operación exitosa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/pedido"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token vencida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Prohibido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forbidden"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/serverError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "pedido"
+        ],
+        "summary": "Elimina un usuario. Solo administrador.",
+        "operationId": "deleteOrder",
+        "parameters": [
+          {
+            "name": "id_pedido",
+            "in": "path",
+            "description": "ID del usuario",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operación exitosa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/operacionExitosa"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token vencida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Prohibido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forbidden"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/serverError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "pedido"
+        ],
+        "summary": "Actualizar los datos de un usuario. Solo admin.",
+        "operationId": "updateOrder",
+        "parameters": [
+          {
+            "name": "id_pedido",
+            "in": "path",
+            "description": "ID del usuario",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/actualizarPedido"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Operación exitosa.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/operacionExitosa"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token vencida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Prohibido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forbidden"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/serverError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/pedido/{id_pedido}/{id_usuario}": {
+      "get": {
+        "tags": [
+          "pedido"
+        ],
+        "summary": "Retorna la información de perfil de un usuario. Rol Admin.",
+        "operationId": "QueryOrderByUser",
+        "parameters": [
+          {
+            "name": "id_pedido",
+            "in": "path",
+            "description": "ID del pedido",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "id_usuario",
+            "in": "path",
+            "description": "ID del usuario",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operación exitosa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/pedido"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token vencida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Prohibido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forbidden"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/serverError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "pedido"
+        ],
+        "summary": "Actualizar los datos de un usuario. Solo admin.",
+        "operationId": "UpdateOrderByUser",
+        "parameters": [
+          {
+            "name": "id_pedido",
+            "in": "path",
+            "description": "ID del pedido",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          },
+          {
+            "name": "id_usuario",
+            "in": "path",
+            "description": "ID del usuario",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/actualizarPedido"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Operación exitosa.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/operacionExitosa"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token vencida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Prohibido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forbidden"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/serverError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/productos": {
+      "get": {
+        "tags": [
+          "productos"
+        ],
+        "summary": "Retorna la lista de productos registrados.",
+        "operationId": "menu",
+        "responses": {
+          "200": {
+            "description": "Operación exitosa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/producto"
+                  }
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token vencida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Prohibido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forbidden"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/serverError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/producto": {
+      "post": {
+        "tags": [
+          "producto"
+        ],
+        "summary": "Crea un producto.",
+        "operationId": "createProduct",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/producto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Producto creado",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/creado"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token vencida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Prohibido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forbidden"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/serverError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/producto/{id_producto}": {
+      "delete": {
+        "tags": [
+          "producto"
+        ],
+        "summary": "Elimina un producto. Solo administrador.",
+        "operationId": "deleteProduct",
+        "parameters": [
+          {
+            "name": "id_producto",
+            "in": "path",
+            "description": "ID del producto",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Operación exitosa",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/operacionExitosa"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token vencida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Prohibido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forbidden"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/serverError"
+                }
+              }
+            }
+          }
+        }
+      },
+      "put": {
+        "tags": [
+          "producto"
+        ],
+        "summary": "Actualizar los datos de un producto. Solo admin.",
+        "operationId": "updateProduct",
+        "parameters": [
+          {
+            "name": "id_producto",
+            "in": "path",
+            "description": "ID del producto",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/producto"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Operación exitosa.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/operacionExitosa"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Token vencida",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/unauthorized"
+                }
+              }
+            }
+          },
+          "403": {
+            "description": "Prohibido",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/forbidden"
+                }
+              }
+            }
+          },
+          "500": {
+            "description": "Error interno",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/serverError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "credencial": {
+        "required": [
+          "email",
+          "password"
+        ],
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "usuario@yopmail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "PassWorD$eCret0"
+          }
+        }
+      },
+      "token": {
+        "type": "string",
+        "example": "asdsdf45541654ASDWEDF432413f"
+      },
+      "dataUser": {
+        "type": "object",
+        "description": "Correspondencia de admin: 1 - Administrador. 0 - Usuario",
+        "properties": {
+          "id_usuario": {
+            "type": "integer",
+            "example": 1
+          },
+          "nombres": {
+            "type": "string",
+            "example": "diego hernando"
+          },
+          "apellidos": {
+            "type": "string",
+            "example": "guzman siera"
+          },
+          "email": {
+            "type": "string",
+            "example": "usuario@yopmail.com"
+          },
+          "direccion_envio": {
+            "type": "string",
+            "example": "carrera 3 # 8 - 25 apartamento 12 torre 5"
+          },
+          "telefono": {
+            "type": "string",
+            "example": "+57 123456789"
+          },
+          "password": {
+            "type": "string",
+            "example": "1d5sa4f6s8r4fg"
+          },
+          "admin": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1,
+            "example": 1
+          },
+          "token": {
+            "type": "string",
+            "example": ""
+          }
+        }
+      },
+      "usuarioNuevo": {
+        "required": [
+          "nombres",
+          "apellidos",
+          "email",
+          "direccion_envio",
+          "telefono",
+          "password",
+          "admin"
+        ],
+        "type": "object",
+        "description": "Correspondencia de admin: 1 - Administrador. 0 - Usuario",
+        "properties": {
+          "nombres": {
+            "type": "string",
+            "example": "diego hernando"
+          },
+          "apellidos": {
+            "type": "string",
+            "example": "gutierrez marin"
+          },
+          "email": {
+            "type": "string",
+            "example": "usuario@yopmail.com"
+          },
+          "direccion_envio": {
+            "type": "string",
+            "example": "edificio 2 apartamente 13 conjunto avenidas carrea 8 # 41 - 2"
+          },
+          "telefono": {
+            "type": "string",
+            "example": "+57 548546354165"
+          },
+          "password": {
+            "type": "string",
+            "example": "145fsdfr876341df"
+          },
+          "admin": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1,
+            "example": 0
+          },
+          "token": {
+            "type": "string",
+            "example": "asasdfr54135.45465asd4f6s5d4f.r6g56r4th654gh"
+          }
+        }
+      },
+      "actualizarUsuario": {
+        "required": [
+          "id_usuario",
+          "nombres"
+        ],
+        "type": "object",
+        "description": "Correspondencia de admin: 1 - Administrador. 0 - Usuario",
+        "properties": {
+          "nombres": {
+            "type": "string",
+            "example": "diego hernando"
+          },
+          "apellidos": {
+            "type": "string",
+            "example": "gutierrez marin"
+          },
+          "email": {
+            "type": "string",
+            "example": "usuario@yopmail.com"
+          },
+          "direccion_envio": {
+            "type": "string",
+            "example": "edificio 2 apartamente 13 conjunto avenidas carrea 8 # 41 - 2"
+          },
+          "telefono": {
+            "type": "string",
+            "example": "+57 548546354165"
+          },
+          "password": {
+            "type": "string",
+            "example": "145fsdfr876341df"
+          },
+          "admin": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 1,
+            "example": 0
+          },
+          "token": {
+            "type": "string",
+            "example": "asasdfr54135.45465asd4f6s5d4f.r6g56r4th654gh"
+          }
+        }
+      },
+      "eliminarUsuario": {
+        "required": [
+          "id_usuario"
+        ],
+        "type": "object",
+        "properties": {
+          "id_usuario": {
+            "type": "integer",
+            "example": 1
+          }
+        }
+      },
+      "estado_pedido": {
+        "type": "object",
+        "description": "Correspondencia de estado del pedido: 1 - Nuevo. 2 - Confirmado. 3 - Preparando. 4 - Enviando. 5 - Entregado. 6 - Cancelado",
+        "properties": {
+          "estado": {
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          }
+        }
+      },
+      "metodo_de_pago": {
+        "type": "object",
+        "description": "Correspondencia de estado del pedido: 1 - Efectivo. 2 - Tarjetacredito. 3 - Tarjetadebito. 4 - cryptomoneda. 5 - consignacion. 6 - pse",
+        "properties": {
+          "estado": {
+            "type": "integer",
+            "enum": [
+              1,
+              2,
+              3,
+              4,
+              5,
+              6
+            ]
+          }
+        }
+      },
+      "pedido": {
+        "type": "object",
+        "properties": {
+          "id_usuario": {
+            "type": "integer",
+            "example": 1
+          },
+          "nombres": {
+            "type": "string",
+            "example": "diego hernando"
+          },
+          "id_pedido": {
+            "type": "integer",
+            "example": 5
+          },
+          "id_foreign_estado_pedidos": {
+            "type": "integer",
+            "example": 1
+          },
+          "id_foreign_forma_de_pago": {
+            "type": "integer",
+            "example": 1
+          },
+          "estado": {
+            "type": "integer",
+            "$ref": "#/components/schemas/estado_pedido"
+          },
+          "metodo": {
+            "type": "integer",
+            "$ref": "#/components/schemas/metodo_de_pago",
+            "example": 2
+          }
+        }
+      },
+      "actualizarPedido": {
+        "required": [
+          "precio"
+        ],
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "example": "Arroz con pollo"
+          },
+          "precio": {
+            "type": "number",
+            "example": 25000
+          }
+        }
+      },
+      "eliminarPedido": {
+        "required": [
+          "id_pedido"
+        ],
+        "type": "object",
+        "properties": {
+          "id_pedido": {
+            "type": "integer",
+            "example": 1
+          }
+        }
+      },
+      "crearPedido": {
+        "required": [
+          "id_foreign_estado_pedidos",
+          "id_foreign_forma_de_pago",
+          "id_foreign_user",
+          "lista_productos_pedido"
+        ],
+        "type": "object",
+        "properties": {
+          "id_foreign_estado_pedidos": {
+            "type": "integer",
+            "description": "El número correspondiente al estado del pedido. Enumerable.",
+            "example": 2
+          },
+          "id_foreign_forma_de_pago": {
+            "type": "integer",
+            "description": "El número correspondiente a la forma de pago. Enumerable."
+          },
+          "id_foreign_user": {
+            "type": "integer",
+            "description": "Id del usuario"
+          },
+          "lista_productos_pedido": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "description": "Array con los ID de los productos del pedido a crear",
+              "example": [
+                1,
+                2,
+                4,
+                6,
+                1,
+                2,
+                5
+              ]
+            }
+          }
+        }
+      },
+      "producto": {
+        "type": "object",
+        "properties": {
+          "nombre": {
+            "type": "string",
+            "example": "agua"
+          },
+          "precio": {
+            "type": "number",
+            "example": 2000
+          }
+        }
+      },
+      "eliminarProducto": {
+        "type": "integer",
+        "example": 1
+      },
+      "historial": {
+        "type": "array",
+        "items": {
+          "$ref": "#/components/schemas/pedido"
+        }
+      },
+      "creado": {
+        "type": "integer",
+        "example": 201
+      },
+      "operacionExitosa": {
+        "type": "integer",
+        "example": 200
+      },
+      "notFount": {
+        "type": "string",
+        "example": 404
+      },
+      "coflict": {
+        "type": "string",
+        "example": 409
+      },
+      "unauthorized": {
+        "type": "string",
+        "example": 401
+      },
+      "forbidden": {
+        "type": "string",
+        "example": 403
+      },
+      "notAcceptable": {
+        "type": "string",
+        "example": 406
+      },
+      "serverError": {
+        "type": "string",
+        "example": 500
+      }
+    },
+    "securitySchemes": {
+      "bearer": {
+        "type": "http",
+        "description": "Token generado con JWT fecha de caducidad vigente",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearer": []
+    }
+  ]
+}
