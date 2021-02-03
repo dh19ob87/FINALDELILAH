@@ -25,11 +25,11 @@ Proyecto Delilah Risto.
   
 De este modo tendrá una base de datos cargada con un total de 6 usuarios con su respectivo historial de pedidos. También cargará los productos. Puede usar estos usuarios para registrarse en el servidor y probar la API.
 
-1. diego : SECRETO_ENCRIPTADO
-2. diana : SECRETO
-3. katalina: SECRETO_YINGYANGYO
-4. lunita: PERFECCION
-5. tati: DESILUSION
+1. DIEGO@YOPMAIL.COM : SECRETO_ENCRIPTADO
+2. diana@yopmail.com : SECRETO
+3. KATA@YOPMAIL.COM: SECRETO_YINGYANGYO
+4. Lunita@dulce.wau: PERFECCION
+5. tati@yopmail.com: DESILUSION
 
 ### Paquetes NPM y programas.
 
