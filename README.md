@@ -10,7 +10,7 @@ Proyecto Delilah Risto.
 
 ### Diagrama entidad - relación
 
-
+![](./BD.png)
 
 ### Creación de la base de datos.
 
