@@ -22,6 +22,14 @@ Proyecto Delilah Risto.
   2. Ejecute la instrucción: USE acamica. Para seleccionar la base de datos.
   3. Abra el archivo SCRIPTBD.txt.
   4. Ejecute las instrucciones del archivo en la consola de MYSQL.
+  
+De este modo tendrá una base de datos cargada con un total de 6 usuarios con su respectivo historial de pedidos. También cargará los productos. Puede usar estos usuarios para registrarse en el servidor y probar la API.
+
+1. diego : SECRETO_ENCRIPTADO
+2. diana : SECRETO
+3. katalina: SECRETO_YINGYANGYO
+4. lunita: PERFECCION
+5. tati: DESILUSION
 
 ### Paquetes NPM y programas.
 
@@ -39,5 +47,5 @@ npm install os fs express body-parser cookie-parser pug jsonwebtoken cors sequel
 4. ejecute el comando: node index.js.
 5. Recibirá un mensaje: Servidor iniciado.
 6. Para verificar el funcionamiento de la API ingrese a http://localhost:3000/api-docs/ Será dirigido a la documentación de la API en donde puede probar las funcionalidades de esta.
-7. Para probar la API necesita un token. Puede usar el siguiente que tiene una vida de 8 días: . O puede crear un usuario desde el endpoint /usuario tal como lo indica la documentación. Para esto necesitará POSTMAN o cURL.
+7. Para probar la API necesita un token. Puede usar el siguiente que tiene una vida de 8 días: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRpZWdvIiwicGFzc3dvcmQiOjEyMzQ1NiwiaWF0IjoxNjEyMzEzMjk3LCJleHAiOjE2MTMwMDQ0OTd9.InfYyBpD17PG-dOwkZnfAXKIsx46eKF0XljblS_KDio . **O puede crear un usuario desde el endpoint /usuario** tal como lo indica la documentación. Para esto necesitará POSTMAN o cURL.
 8. En el EndPoint /api-docs encontrará toda la información necesaria para utilizar la API.
