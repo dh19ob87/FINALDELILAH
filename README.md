@@ -47,7 +47,9 @@ npm install os fs express body-parser cookie-parser pug jsonwebtoken cors sequel
 4. ejecute el comando: **node index.js**
 5. Recibirá un mensaje: Servidor iniciado.
 6. Para verificar el funcionamiento de la API ingrese a http://localhost:3000/api-docs/ Será dirigido a la documentación de la API en donde puede probar las funcionalidades de esta.
-7. Para probar la API necesita un token. Puede usar el siguiente que tiene una vida de 8 días: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRpZWdvIiwicGFzc3dvcmQiOjEyMzQ1NiwiaWF0IjoxNjEyMzEzMjk3LCJleHAiOjE2MTMwMDQ0OTd9.InfYyBpD17PG-dOwkZnfAXKIsx46eKF0XljblS_KDio . **O puede crear un usuario desde el endpoint /usuario** tal como lo indica la documentación. Para esto necesitará POSTMAN o cURL.
+7. Para probar la API necesita un token. Puede usar el siguiente que tiene una vida de 8 días:
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImRpZWdvIiwicGFzc3dvcmQiOjEyMzQ1NiwiaWF0IjoxNjEyMzEzMjk3LCJleHAiOjE2MTMwMDQ0OTd9.InfYyBpD17PG-dOwkZnfAXKIsx46eKF0XljblS_KDio . 
+**O puede crear un usuario desde el endpoint /usuario** tal como lo indica la documentación. Para esto necesitará POSTMAN o cURL.
 8. En el EndPoint /api-docs encontrarás toda la información necesaria para utilizar la API.
 
 ### ¿Cómo registrar un usuario?
